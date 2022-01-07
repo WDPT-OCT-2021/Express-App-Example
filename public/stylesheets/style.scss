@@ -1,0 +1,92 @@
+// variable in sass
+$navBackground: #708090;
+
+// reusable style in sass
+@mixin center-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+body {
+    margin: 0;
+    padding: 3vw 0 0;
+
+    #body {
+        min-height: 90vh;
+        padding: 2vw 5vw;
+    }
+
+    nav {
+        @include center-content;
+        background-color: $navBackground;
+        position: fixed;
+        top: 0;
+        width: 90vw;
+        height: 3vw;
+        padding: 0 5vw;
+
+        // nav div.nth-child(2) {}
+        div:nth-child(1) {
+            @include center-content;
+
+            // nav div.nth-child(2) a {}
+            a {
+                margin-right: 1vw;
+            }
+        }
+
+        // nav div.nth-child(2) {}
+        div:nth-child(2) {
+            @include center-content;
+
+            // nav div.nth-child(2) a {}
+            a {
+                margin-left: 1vw;
+            }
+        }
+
+        // nav a {}
+        a {
+            color: snow;
+            text-decoration: none;
+
+            &:hover {
+                color: yellow;
+            }
+        }
+
+        // nav h4 {}
+        h4 {
+            color: darkslateblue;
+        }
+    }
+
+    .trip {
+        &__create-form {
+            @include center-content;
+            flex-direction: column;
+            border: 1px solid black;
+            width: 16vw;
+            margin: 0 auto;
+
+            div {
+                @include center-content;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100%;
+                margin-bottom: 1vw;
+
+                label {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    margin-bottom: 0.5vw;
+                }
+            }
+        }
+
+        &__list {
+        }
+    }
+}

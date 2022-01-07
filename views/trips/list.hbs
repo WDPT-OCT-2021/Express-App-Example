@@ -1,0 +1,34 @@
+<h2>Trips List</h2>
+
+{{!-- the method is the method used for the route you will be calling for the form. --}}
+{{!-- the action is the endpoint that you created for the route the form is going to call. --}}
+{{!-- the endpoint starts with whatever you have set up in app.js to call the route file first and takes the param you set up for the endpoint in the routes files right after --}}
+{{!-- ei: app.js has app.use("/trips", require("./routes/trip-routes/trip")) so you start with /trips ------ trip.js (route file) has router.post("/create", so you finish the action with /create which gives you /trips/create --}}
+<form class='trip__create-form' action="/trips/create" method="post">
+  <div>
+    {{!-- remember to use the same name for the input as the field in the model that you are trying to get the data for --}}
+    <label for="locationInput">Location to Travel to: <input id='locationInput' type="text" name="location"></label>
+    {{!-- when using label and input, make the 'for' parameter of the label the same name as the 'id' parameter of the input --}}
+    <label for="travelStartDateInput">Trip Start Date: <input id="travelStartDateInput" type="date"
+        name="travelStartDate"></label>
+    <label for="travelEndDateInput">Trip End Date: <input id="travelEndDateInput" type="date"
+        name="travelEndDate"></label>
+    <label for="costInput">Cost of Trip: <input id="costInput" type="text" name='cost'></label>
+  </div>
+
+  {{!-- a button within a form will trigger the submit for that form. This button automatically has a type of submit --}}
+  <button>Create Trip</button>
+</form>
+
+<br>
+
+<h2>{{currentUser.username}} Trips</h2>
+<div class="trip__list">
+  {{#if hasTrips}}
+  {{#each trips}}
+  <a href="/trips/details/{{this._id}}">{{location}}</a>
+  {{/each}}
+  {{else}}
+  <h3>You Do Not Have Any Trips Planned</h3>
+  {{/if}}
+</div>

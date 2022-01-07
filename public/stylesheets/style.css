@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  padding: 3vw 0 0; }
+  body #body {
+    min-height: 90vh;
+    padding: 2vw 5vw; }
+  body nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #708090;
+    position: fixed;
+    top: 0;
+    width: 90vw;
+    height: 3vw;
+    padding: 0 5vw; }
+    body nav div:nth-child(1) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; }
+      body nav div:nth-child(1) a {
+        margin-right: 1vw; }
+    body nav div:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; }
+      body nav div:nth-child(2) a {
+        margin-left: 1vw; }
+    body nav a {
+      color: snow;
+      text-decoration: none; }
+      body nav a:hover {
+        color: yellow; }
+    body nav h4 {
+      color: darkslateblue; }
+  body .trip__create-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 16vw;
+    margin: 0 auto; }
+    body .trip__create-form div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      justify-content: space-between;
+      flex-direction: column;
+      width: 100%;
+      margin-bottom: 1vw; }
+      body .trip__create-form div label {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 0.5vw; }
+
+/*# sourceMappingURL=style.css.map */
