@@ -3,6 +3,7 @@ const router = express.Router();
 const Trip = require("../../models/Trip.model");
 const User = require("../../models/User.model");
 const axios = require("axios");
+const uploadCloud = require("../../config/cloudinary-config");
 
 /* Read Route - Trip list page */
 router.get("/", (req, res, next) => {
@@ -115,9 +116,6 @@ router.post("/create", (req, res, next) => {
         .catch((err) => next(err));
 });
 
-/** Update Route - Add or remove a task from the trip */
-router.post("/update/:tripId", (req, res, next) => {});
-
 /** Delete Route - Delete Trip from user and DB */
 router.get("/delete/:tripId", (req, res, next) => {
     User.findByIdAndUpdate(
@@ -141,5 +139,50 @@ router.get("/delete/:tripId", (req, res, next) => {
         })
         .catch((err) => next(err));
 });
+
+/** Read Route - Update Page for Trip */
+router.get("/update/:tripId", (req, res, next) => {
+    Trip.findById(req.params.tripId)
+        .then((tripFromDb) => {
+            axios
+                .get("https://restcountries.com/v3.1/all")
+                .then((allCountriesFromApi) => {
+                    console.log({
+                        countries: allCountriesFromApi.data
+                            .map((country) => country.name.common)
+                            .sort(),
+                        // countriesFromApi: allCountriesFromApi.data,
+                    });
+                    res.render("trips/update", { trip: tripFromDb });
+                })
+                .catch((err) => next(err));
+        })
+        .catch((err) => next(err));
+});
+
+// cloudinary update route
+// for uploadCloud.single() the name of the argument is the name you give the input
+router.post(
+    "/update/:tripId",
+    // uploadCloud.single("image"),
+    (req, res, next) => {
+        console.log({ file: req.file, body: req.body });
+        const updateData = {
+            ...req.body,
+            // destinationImage: req.file.url, // use req.file.url when using regular cloudinary version
+            // destinationImage: req.file.path, // use req.file.path when using cloudinary.v2 version
+        };
+        Trip.findByIdAndUpdate(
+            req.params.tripId,
+            // req.body.destinationImage ? updateData : req.body,
+            { new: true }
+        )
+            .then((updatedTrip) => {
+                console.log({ updatedTrip });
+                res.redirect(`/trips/details/${updatedTrip._id}`);
+            })
+            .catch((err) => next(err));
+    }
+);
 
 module.exports = router;

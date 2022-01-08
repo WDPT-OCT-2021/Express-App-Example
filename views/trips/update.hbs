@@ -1,0 +1,27 @@
+<h2>Update Trip to {{trip.location}}</h2>
+
+{{!-- remember in a form that you will be using file upload for, you must set the enctype to multipart/form-data --}}
+<form class='form__create-form' action="/trips/update/{{trip._id}}" method="post">
+  <div>
+    <label for="locationInput">Location to Travel to: <input id='locationInput' type="text" name="location"
+        value="{{trip.location}}"></label>
+    <label for="travelStartDateInput">Trip Start Date: <input id="travelStartDateInput" type="date"
+        name="travelStartDate" value="{{trip.travelStartDate}}"></label>
+    <label for="travelEndDateInput">Trip End Date: <input id="travelEndDateInput" type="date" name="travelEndDate"
+        value="{{trip.travelEndDate}}"></label>
+    <label for="costInput">Cost of Trip: <input id="costInput" type="text" name='cost' value="{{trip.cost}}"></label>
+    <label for="">Which Country/s:
+      <select name="country" value="{{trip.country}}">
+        {{#each countries}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </label>
+  </div>
+
+  {{!-- the name that you use for the file input has to be the same as the one used for this forms route under uploadCloud.single(<name used goes here>) --}}
+  <label for="destinationImageInput"><input id="destinationImageInput" type="file" name="image"></label>
+
+  {{!-- a button within a form will trigger the submit for that form. This button automatically has a type of submit --}}
+  <button>Update Trip</button>
+</form>

@@ -4,6 +4,7 @@ const tripSchema = new Schema(
     {
         location: String,
         country: String,
+        destinationImage: String,
         tasksIWillDoAtSaidLocation: [
             { type: Schema.Types.ObjectId, ref: "Task" },
         ],
