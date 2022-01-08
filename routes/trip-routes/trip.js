@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Trip = require("../../models/Trip.model");
 const User = require("../../models/User.model");
+const axios = require("axios");
 
 /* Read Route - Trip list page */
 router.get("/", (req, res, next) => {
@@ -30,13 +31,29 @@ router.get("/", (req, res, next) => {
         .populate("travelLocations")
         .then((currentUserFromDb) => {
             // console.log({ currentUserFromDb });
+            axios
+                .get("https://restcountries.com/v3.1/all")
+                .then((allCountriesFromApi) => {
+                    console.log({
+                        countries: allCountriesFromApi.data
+                            .map((country) => country.name.common)
+                            .sort(),
+                        // countriesFromApi: allCountriesFromApi.data,
+                    });
 
-            data = {
-                trips: currentUserFromDb.travelLocations,
-                hasTrips: currentUserFromDb.travelLocations.length > 0,
-            };
+                    // if limited on the calls from the api, try creating an initial seed route to grab all the data once from the api, and create a model for that data, store it in your DB, then call the needed data from your own DB when required. * this should only be done with data that is not going to be changing so that you do not have inconsistent information given to the user.
 
-            res.render("trips/list", data);
+                    data = {
+                        trips: currentUserFromDb.travelLocations,
+                        hasTrips: currentUserFromDb.travelLocations.length > 0,
+                        countries: allCountriesFromApi.data
+                            .map((country) => country.name.common)
+                            .sort(),
+                    };
+
+                    res.render("trips/list", data);
+                })
+                .catch((err) => next(err));
         })
         .catch((err) => next(err));
 });
@@ -44,9 +61,24 @@ router.get("/", (req, res, next) => {
 /* Read Route - Trip Details page */
 router.get("/details/:tripId", (req, res, next) => {
     Trip.findById(req.params.tripId)
+        .populate("tasksIWillDoAtSaidLocation")
         .then((tripFromDb) => {
-            console.log({ tripFromDb });
-            res.render("trips/details", { trip: tripFromDb });
+            // console.log({ tripFromDb });
+            axios
+                .get(
+                    `https://restcountries.com/v3.1/name/${tripFromDb.country}`
+                )
+                .then((countryFromApi) => {
+                    console.log({ country: countryFromApi.data[0].flag });
+                    data = {
+                        trip: tripFromDb,
+                        tasksPlanned:
+                            tripFromDb.tasksIWillDoAtSaidLocation.length > 0,
+                        country: countryFromApi.data[0],
+                    };
+                    res.render("trips/details", data);
+                })
+                .catch((err) => next(err));
         })
         .catch((err) => next(err));
 });
@@ -96,13 +128,13 @@ router.get("/delete/:tripId", (req, res, next) => {
         { new: true }
     )
         .then((updatedUser) => {
-            console.log({ deleteTrip: req.params.tripId, updatedUser });
+            // console.log({ deleteTrip: req.params.tripId, updatedUser });
             // *** anytime you update data on the user, remember to update the session user data. ***
             req.session.user = updatedUser;
 
             Trip.findByIdAndDelete(req.params.tripId)
                 .then(() => {
-                    console.log({ DeleteMessage: "successfully deleted trip" });
+                    // console.log({ DeleteMessage: "successfully deleted trip" });
                     res.redirect("/trips");
                 })
                 .catch((err) => next(err));

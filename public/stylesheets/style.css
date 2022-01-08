@@ -33,15 +33,16 @@ body {
         color: yellow; }
     body nav h4 {
       color: darkslateblue; }
-  body .trip__create-form {
+  body .form__create-form {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
     border: 1px solid black;
-    width: 16vw;
-    margin: 0 auto; }
-    body .trip__create-form div {
+    width: 24vw;
+    margin: 0 auto;
+    padding: 2vw; }
+    body .form__create-form div {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -49,7 +50,7 @@ body {
       flex-direction: column;
       width: 100%;
       margin-bottom: 1vw; }
-      body .trip__create-form div label {
+      body .form__create-form div label {
         display: flex;
         justify-content: space-between;
         width: 100%;

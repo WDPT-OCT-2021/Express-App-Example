@@ -1,0 +1,24 @@
+<h2>{{#if editTask}}Update {{task.title}} for {{trip.location}} Trip{{else}}Create Task for {{trip.location}}
+  Trip{{/if}}</h2>
+
+<form class='form__create-form'
+  action="{{#if editTask}}/tasks/update/{{task._id}}{{else}}/tasks/create/{{trip._id}}{{/if}}" method="post">
+  <div>
+    {{#if editTask}}
+    <label for="titleInput">Title: <input id="titleInput" type="text" name="title" value="{{task.title}}"></label>
+    <label for="durationInput">Duration: <input id="durationInput" type="text" name="duration"
+        value="{{task.duration}}"></label>
+    <label for="descriptionInput">Description: <input id="descriptionInput" type="text" name="description"
+        value="{{task.description}}"></label>
+    <label for="isCompleteInput">Completed: <input id="isCompleteInput" type="checkbox" {{#if task.isCompleted}} checked
+        {{/if}} name="isCompleted"></label>
+    {{else}}
+    <label for="titleInput">Title: <input id="titleInput" type="text" name="title"></label>
+    <label for="durationInput">Duration: <input id="durationInput" type="text" name="duration"></label>
+    <label for="descriptionInput">Description: <input id="descriptionInput" type="text" name="description"></label>
+    {{/if}}
+  </div>
+
+  <br>
+  <button>{{#if editTask}}Update{{else}}Add{{/if}} Task</button>
+</form>

@@ -4,7 +4,7 @@
 {{!-- the action is the endpoint that you created for the route the form is going to call. --}}
 {{!-- the endpoint starts with whatever you have set up in app.js to call the route file first and takes the param you set up for the endpoint in the routes files right after --}}
 {{!-- ei: app.js has app.use("/trips", require("./routes/trip-routes/trip")) so you start with /trips ------ trip.js (route file) has router.post("/create", so you finish the action with /create which gives you /trips/create --}}
-<form class='trip__create-form' action="/trips/create" method="post">
+<form class='form__create-form' action="/trips/create" method="post">
   <div>
     {{!-- remember to use the same name for the input as the field in the model that you are trying to get the data for --}}
     <label for="locationInput">Location to Travel to: <input id='locationInput' type="text" name="location"></label>
@@ -14,6 +14,13 @@
     <label for="travelEndDateInput">Trip End Date: <input id="travelEndDateInput" type="date"
         name="travelEndDate"></label>
     <label for="costInput">Cost of Trip: <input id="costInput" type="text" name='cost'></label>
+    <label for="">Which Country/s:
+      <select name="country">
+        {{#each countries}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </label>
   </div>
 
   {{!-- a button within a form will trigger the submit for that form. This button automatically has a type of submit --}}

@@ -3,6 +3,7 @@ const { Schema, model } = require("mongoose");
 const tripSchema = new Schema(
     {
         location: String,
+        country: String,
         tasksIWillDoAtSaidLocation: [
             { type: Schema.Types.ObjectId, ref: "Task" },
         ],

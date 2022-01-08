@@ -1,1 +1,11 @@
-<h2>Task Details</h2>
+<h2>{{task.title}} Details</h2>
+
+<div>
+  <h3>Duration: {{task.duration}}</h3>
+  <h3>Description: {{task.description}}</h3>
+
+  <button><a href="/tasks/create/{{tripId}}/?editTask={{task._id}}">Edit This Task</a></button>
+  {{!-- here I will be passing the query "editTask" to the create task route in order to be able to edit the task in the create page for the task ( *** remember for any route that you pass a query to, that the route is set up to use said query otherwise it will have no effect except just passing data to the void of nothingness ***) --}}
+</div>
+
+<button><a href="/tasks/delete/{{task._id}}/{{tripId}}">Delete This Task</a></button>

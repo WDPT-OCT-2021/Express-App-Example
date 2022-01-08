@@ -2,10 +2,29 @@
 
 <div>
   <h3>Location: {{trip.location}}</h3>
+  <h3>Country: {{trip.country}} - {{country.flag}}</h3>
   <h4>From: {{trip.travelStartDate}} - To: {{trip.travelEndDate}}</h4>
   <h4>Cost: {{trip.cost}}</h4>
 
   <br>
 
   <button><a href="/trips/delete/{{trip._id}}">Delete This Trip</a></button>
+
+  <br>
+
+  <h3>Things To Do</h3>
+  {{#if tasksPlanned}}
+  <div>
+    {{#each trip.tasksIWillDoAtSaidLocation}}
+    <a href="/tasks/details/{{this._id}}/{{../trip._id}}">{{this.title}}</a> &nbsp <button><a
+        href="/tasks/delete/{{this._id}}/{{../trip._id}}">X</a></button>
+    {{/each}}
+    <br>
+    <br>
+    <button><a href="/tasks/create/{{trip._id}}">Add Another Thing To Do</a></button>
+  </div>
+  {{else}}
+  <h4>You Do Not Have Any Tasks Planned for This Trip. <a href="/tasks/create/{{trip._id}}">Add One Now</a></h4>
+  {{/if}}
+  <br>
 </div>

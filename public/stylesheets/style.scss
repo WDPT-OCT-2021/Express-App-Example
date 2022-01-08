@@ -62,13 +62,14 @@ body {
         }
     }
 
-    .trip {
+    .form {
         &__create-form {
             @include center-content;
             flex-direction: column;
             border: 1px solid black;
-            width: 16vw;
+            width: 24vw;
             margin: 0 auto;
+            padding: 2vw;
 
             div {
                 @include center-content;
